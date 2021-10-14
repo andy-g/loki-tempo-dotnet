@@ -43,7 +43,7 @@ namespace loki_tempo_dotnet
                 // .AddConsoleExporter()
                 .AddOtlpExporter(opt =>
                 {
-                    opt.Endpoint = new Uri("http://grafana-agent:4317");
+                    opt.Endpoint = new Uri("http://tempo:55680");
                 }));
         }
 

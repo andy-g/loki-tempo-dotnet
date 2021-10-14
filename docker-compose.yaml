@@ -17,14 +17,6 @@ services:
     depends_on:
       - loki
 
-  grafana-agent:
-    image: grafana/agent:latest
-    command: "-config.file=/etc/agent-config.yaml"
-    volumes:
-      - ./service-configs/grafana-agent/agent-config.yaml:/etc/agent-config.yaml
-    depends_on:
-      - tempo
-
   loki:
     image: grafana/loki:latest
     command: -config.file=/etc/loki/loki-config.yaml
