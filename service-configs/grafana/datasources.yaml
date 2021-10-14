@@ -12,9 +12,12 @@ datasources:
   basicAuth: false
   isDefault: false
   version: 1
-  editable: false
+  editable: true
   apiVersion: 1
   uid: tempo
+  jsonData:
+    tracesToLogs:
+      datasourceUid: loki
 - name: Loki
   type: loki
   access: proxy 
@@ -23,7 +26,8 @@ datasources:
   basicAuth: false
   isDefault: true
   version: 1
-  editable: false
+  editable: true
+  uid: loki  
   jsonData:
     derivedFields:
       - datasourceUid: tempo
