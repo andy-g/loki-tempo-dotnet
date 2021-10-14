@@ -1,6 +1,6 @@
-bin/
-obj/
-Properties/
+**/bin/
+**/obj/
+/src/Properties/
 .dockerignore
 .gitignore
 # appsettings.Development.json
