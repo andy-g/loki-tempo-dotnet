@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry.Trace;
 
 namespace loki_tempo_dotnet.Controllers
 {
@@ -26,6 +27,8 @@ namespace loki_tempo_dotnet.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            Console.WriteLine($"Getting weather forecast traceID={Tracer.CurrentSpan.Context.TraceId.ToHexString()}");
+            
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

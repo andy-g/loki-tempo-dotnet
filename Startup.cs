@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace loki_tempo_dotnet
 {
@@ -32,6 +35,16 @@ namespace loki_tempo_dotnet
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "loki_tempo_dotnet", Version = "v1" });
             });
+            services.AddOpenTelemetryTracing((builder) => builder
+                .SetResourceBuilder(
+                    ResourceBuilder.CreateDefault().AddService("loki-tempo-dotnet")
+                )
+                .AddAspNetCoreInstrumentation()
+                // .AddConsoleExporter()
+                .AddOtlpExporter(opt =>
+                {
+                    opt.Endpoint = new Uri("http://grafana-agent:4317");
+                }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +57,7 @@ namespace loki_tempo_dotnet
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "loki_tempo_dotnet v1"));
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
