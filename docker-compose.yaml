@@ -2,7 +2,7 @@ version: "3"
 services:
   app:
     image: mcr.microsoft.com/dotnet/sdk:6.0
-    command: bash -c "dotnet run --urls http://+:5000"
+    command: bash -c "dotnet watch run --urls http://+:5000"
     working_dir: /app
     volumes:
       - ./src:/app
