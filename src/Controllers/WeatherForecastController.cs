@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +28,11 @@ namespace loki_tempo_dotnet.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             Console.WriteLine($"Getting weather forecast traceID={Tracer.CurrentSpan.Context.TraceId.ToHexString()}");
-            
+
+            // It seems like the docker plugin can't send logs with '.' so we need to add 'service_name' instead of 'service.name'
+            Tracer.CurrentSpan.SetAttribute("service_name", "loki-tempo-dotnet");
+
+            // using var scope = this.logger.BeginScope("{Id}", Guid.NewGuid().ToString("N"));
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

@@ -40,10 +40,11 @@ namespace loki_tempo_dotnet
                     ResourceBuilder.CreateDefault().AddService("loki-tempo-dotnet")
                 )
                 .AddAspNetCoreInstrumentation()
+                .AddHttpClientInstrumentation()
                 // .AddConsoleExporter()
                 .AddOtlpExporter(opt =>
                 {
-                    opt.Endpoint = new Uri("http://tempo:55680");
+                    opt.Endpoint = new Uri("http://tempo:4317");
                 }));
         }
 

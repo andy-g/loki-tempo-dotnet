@@ -10,10 +10,13 @@ services:
      - "5000:5000"
     # Requires docker plugin to be installed:
     # docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions 
+    labels:
+      service.name: "loki-tempo-dotnet"
     logging:
-         driver: loki
-         options:
-           loki-url: http://localhost:3100/api/prom/push
+      driver: loki
+      options:
+        loki-url: http://localhost:3100/api/prom/push
+        labels: service.name
     depends_on:
       - loki
 
@@ -32,7 +35,7 @@ services:
       - ./service-configs/tempo/tempo-local.yaml:/etc/tempo.yaml
     ports:
       - "3200:3200"   # tempo
-      - "55680"       # otlp grpc
+      - "4317:4317"   # otlp grpc
 
   grafana:
     image: grafana/grafana:latest
